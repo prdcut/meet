@@ -4,33 +4,48 @@ class CitySearch extends Component {
   state = {
     query: '',
     suggestions: [],
-    showSuggestions: undefined
+    showSuggestions: false
 
   }
 
   handleInputChanged = (event) => {
     const value = event.target.value;
+    this.setState({ showSuggestions: true });
     const suggestions = this.props.locations.filter((location) => {
       return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
     });
-    this.setState({
-      query: value,
-      suggestions,
-    });
+    if (value === '') {
+      this.setState({
+        suggestions: [],
+        query: '',
+        showSuggestions: false,
+      })
+    };
+    if (suggestions.length === 0) {
+      this.setState({
+        query: value,
+        suggestions: []
+      });
+    } else {
+      return this.setState({
+        query: value,
+        suggestions,
+      });
+    }
   };
 
   handleItemClicked = (suggestion) => {
     this.setState({
       query: suggestion,
-      showSuggestions: false
+      showSuggestions: false,
     });
-
-    this.props.updateEvents(suggestion);
-  }
+    this.props.updateEvents(suggestion, 0);
+  };
 
   render() {
     return (
       <div className="CitySearch">
+        <label htmlFor='CitySearch'>Event Location</label>
         <input
           type="text"
           className="city"
@@ -45,7 +60,7 @@ class CitySearch extends Component {
               onClick={() => this.handleItemClicked(suggestion)}
             >{suggestion}</li>
           ))}
-          <li onClick={() => this.handleItemClicked("all")}>
+          <li key={'all'} onClick={() => this.handleItemClicked("all")}>
             <b>See all cities</b>
           </li>
         </ul>
