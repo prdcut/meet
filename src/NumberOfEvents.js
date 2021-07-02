@@ -3,18 +3,18 @@ import React, { Component } from 'react';
 class NumberOfEvents extends Component {
 
   state = {
-    eventsToShow: 32
+    numberOfEvents: 32
   }
 
   handleChange = (event) => {
     const value = event.target.value;
     if (value !== 0) {
       this.setState({
-        eventsToShow: value
+        numberOfEvents: value
       });
     } else {
       this.setState({
-        eventsToShow: 32
+        numberOfEvents: 32
       });
     }
   }
@@ -22,16 +22,16 @@ class NumberOfEvents extends Component {
   render() {
     return (
       <div className="NumberOfEvents">
-        <label for="events">Events per page:
-          <input
-            type="number"
-            id="number"
-            value={this.state.eventsToShow}
-            onChange={this.handleChange} />
-        </label>
+        <label className="events">Events per page:</label>
+        <input
+          type="number"
+          className="event-number-input"
+          value={this.state.numberOfEvents}
+          onChange={this.handleChange} />
+
       </div>
     )
   }
-}
+};
 
 export default NumberOfEvents;
