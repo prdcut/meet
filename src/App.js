@@ -12,7 +12,7 @@ class App extends Component {
   state = {
     events: [],
     locations: [],
-    numberOfEvents: 10
+    numberOfEvents: 15
   }
 
   componentDidMount() {
