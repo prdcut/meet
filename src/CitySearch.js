@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { InfoAlert } from './Alert';
 
 class CitySearch extends Component {
   state = {
     query: '',
     suggestions: [],
-    showSuggestions: false
+    showSuggestions: false,
+    infoText: ''
 
   }
 
@@ -24,12 +26,14 @@ class CitySearch extends Component {
     if (suggestions.length === 0) {
       this.setState({
         query: value,
-        suggestions: []
+        suggestions: [],
+        infoText: 'Snap! we can not find the city you are looking for. Please try again!',
       });
     } else {
       return this.setState({
         query: value,
         suggestions,
+        infoText: '',
       });
     }
   };
@@ -38,6 +42,7 @@ class CitySearch extends Component {
     this.setState({
       query: suggestion,
       showSuggestions: false,
+      infoText: ''
     });
     this.props.updateEvents(suggestion, 0);
   };
@@ -52,7 +57,9 @@ class CitySearch extends Component {
           value={this.state.query}
           onChange={this.handleInputChanged}
           onFocus={() => { this.setState({ showSuggestions: true }) }}
+          placeholder="Enter Event Location"
         />
+
         <ul className="suggestions" style={this.state.showSuggestions ? {} : { display: 'none' }}>
           {this.state.suggestions.map((suggestion) => (
             <li
@@ -64,6 +71,9 @@ class CitySearch extends Component {
             <b>See all cities</b>
           </li>
         </ul>
+
+        <InfoAlert text={this.state.infoText} />
+
       </div>
     );
   }
