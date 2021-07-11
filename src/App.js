@@ -4,7 +4,9 @@ import './nprogress.css';
 import EventList from './EventList';
 import CitySearch from './CitySearch';
 import NumberOfEvents from './NumberOfEvents';
-import { getEvents, extractLocations } from './api';
+import { getEvents, extractLocations, checkToken, getAccessToken } from './api';
+import WelcomeScreen from './WelcomeScreen';
+import { WarningAlert } from './Alert';
 
 
 class App extends Component {
@@ -12,23 +14,9 @@ class App extends Component {
   state = {
     events: [],
     locations: [],
-    numberOfEvents: 15
-  }
-
-  componentDidMount() {
-    this.mounted = true;
-    getEvents().then((events) => {
-      if (this.mounted) {
-        this.setState({
-          events: events.slice(0, this.state.numberOfEvents),
-          locations: extractLocations(events)
-        });
-      }
-    });
-  }
-
-  componentWillUnmount() {
-    this.mounted = false;
+    numberOfEvents: 15,
+    showWelcomeScreen: undefined,
+    warningText: ''
   }
 
   updateEvents = (location, eventCount) => {
@@ -50,7 +38,42 @@ class App extends Component {
     });
   };
 
+  async componentDidMount() {
+    this.mounted = true;
+    const accessToken = localStorage.getItem('access_token');
+    const isTokenValid = (await checkToken(accessToken)).error ? false : true;
+    const searchParams = new URLSearchParams(window.location.search);
+    const code = searchParams.get("code");
+    this.setState({ showWelcomeScreen: !(code || isTokenValid) });
+    if ((code || isTokenValid) && this.mounted) {
+      getEvents().then((events) => {
+        if (this.mounted) {
+          this.setState({
+            events: events.slice(0, this.state.numberOfEvents),
+            locations: extractLocations(events),
+          });
+        }
+      });
+      if (!navigator.onLine) {
+        this.setState({
+          warningText: 'You may not be online. Cached data is being displayed!'
+        })
+      }
+      else {
+        this.setState({
+          warningText: ''
+        })
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
+  }
+
   render() {
+    if (this.state.showWelcomeScreen === false) return <div
+      className="App" />
     return (
       <div className="App">
         <h1 className="app-name">Meet App</h1>
@@ -65,6 +88,11 @@ class App extends Component {
         />
         <EventList
           events={this.state.events}
+        />
+        <WarningAlert text={this.state.offlinealert} />
+        <WelcomeScreen
+          showWelcomeScreen={this.state.showWelcomeScreen}
+          getAccessToken={() => { getAccessToken() }}
         />
       </div>
     );
