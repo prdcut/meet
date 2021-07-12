@@ -10,12 +10,13 @@ function WelcomeScreen(props) {
           full-stack
           developers
         </h4>
-        <div className="button_cont" align="center">
+        <div className="login-button" align="center">
           <div class="google-btn">
             <div class="google-icon-wrapper">
               <img
                 class="google-icon"
-                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"
+                src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Log
+o.svg"
                 alt="Google sign-in"
               />
             </div>
@@ -28,7 +29,7 @@ function WelcomeScreen(props) {
           </div>
         </div>
         <a
-          href="https://proudcut.github.io/meet/privacy.html"
+          href="https://YOUR_GITHUB_USERNAME.github.io/meet/privacy.html"
           rel="nofollow noopener"
         >
           Privacy policy
