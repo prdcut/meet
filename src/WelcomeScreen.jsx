@@ -29,7 +29,7 @@ o.svg"
           </div>
         </div>
         <a
-          href="https://YOUR_GITHUB_USERNAME.github.io/meet/privacy.html"
+          href="https://proudcut.github.io/meet/privacy.html"
           rel="nofollow noopener"
         >
           Privacy policy
