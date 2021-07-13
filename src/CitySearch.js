@@ -50,19 +50,17 @@ class CitySearch extends Component {
   render() {
     return (
       <div className="CitySearch">
-        <form>
-          <label htmlFor='CitySearch'>
-            Event Location
-          </label>
-          <input
-            type="text"
-            className="city"
-            value={this.state.query}
-            onChange={this.handleInputChanged}
-            onFocus={() => { this.setState({ showSuggestions: true }) }}
-            placeholder="Enter Event Location"
-          />
-        </form>
+        <label htmlFor='CitySearch'>
+          Event Location
+        </label>
+        <input
+          type="text"
+          className="city"
+          value={this.state.query}
+          onChange={this.handleInputChanged}
+          onFocus={() => { this.setState({ showSuggestions: true }) }}
+          placeholder="Enter Event Location"
+        />
 
         <ul className="suggestions" style={this.state.showSuggestions ? {} : { display: 'none' }}>
           {this.state.suggestions.map((suggestion) => (

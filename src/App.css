@@ -40,15 +40,6 @@ input[type="number"] {
   width: 250px;
 }
 
-.CitySearch {
-  display: flex;
-  flex-direction: column;
-  flex-basis: 300px;
-  max-width: 300px;
-  margin: auto;
-  position: relative;
-}
-
 .suggestions {
   width: 250px;
   position: absolute;

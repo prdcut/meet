@@ -33,7 +33,7 @@ class NumberOfEvents extends Component {
     return (
       <div className="NumberOfEvents">
         <label className="events">
-          Number Of Events
+          Number of Events
         </label>
         <input
           type="number"
